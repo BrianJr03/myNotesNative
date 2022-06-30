@@ -5,4 +5,16 @@
     <string name="locked_note_descr">Indicates if the Note is locked</string>
     <string name="add_note">Add note</string>
     <string name="note_title">Note Title</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="back">back</string>
+    <string name="color_lens">color lens</string>
+    <string name="star">star</string>
+    <string name="lock">lock</string>
+    <string name="increase_text_size">increase text size</string>
+    <string name="save">save</string>
+    <string name="delete">delete</string>
+    <string name="title">Title</string>
+    <string name="body">Note Body</string>
 </resources>

@@ -11,9 +11,7 @@ import jr.brian.mynotesnative.databinding.NoteBinding
 class NoteAdapter(private val context: Context, private val notes: List<Note>) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
-    lateinit var binding: NoteBinding
-
-    override fun getItemCount() = notes.size
+    private lateinit var binding: NoteBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,6 +19,8 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
         return NoteViewHolder(binding.root)
 
     }
+
+    override fun getItemCount() = notes.size
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.apply {
