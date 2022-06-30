@@ -40,7 +40,6 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
             binding.apply {
                 noteTitle.text = note.title
                 date.text = note.date
-
             }
 
         }
