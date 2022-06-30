@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">myNotesNative</string>
+    <string name="example_date">March 23, 1998</string>
+    <string name="starred_note_descr">Indicates if the Note is starred</string>
+    <string name="locked_note_descr">Indicates if the Note is locked</string>
+    <string name="add_note">Add note</string>
+</resources>
