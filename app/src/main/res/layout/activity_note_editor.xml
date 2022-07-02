@@ -118,7 +118,7 @@
         android:layout_marginTop="@dimen/_5dp"
         android:autofillHints=""
         android:hint="@string/note_title"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:padding="@dimen/_25dp"
         android:textColor="@color/blueish_idk"
         android:textSize="@dimen/_20sp"

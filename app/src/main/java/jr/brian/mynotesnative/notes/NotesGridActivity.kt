@@ -5,10 +5,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.android.material.snackbar.Snackbar
@@ -28,16 +27,9 @@ class NotesGridActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNotesGridBinding.inflate(layoutInflater)
-        quickAddBinding = QuickAddDialogBinding.inflate(layoutInflater)
-        databaseHelper = DatabaseHelper(this)
-        noteList = ArrayList()
+        init()
         setContentView(binding.root)
         supportActionBar?.hide()
-        initSharedPref()
-        setAdapter()
-        initData()
-        enableSignOut()
     }
 
     private fun deleteNote(viewHolder: RecyclerView.ViewHolder) {
@@ -71,7 +63,19 @@ class NotesGridActivity : AppCompatActivity() {
         index = noteList.size
     )
 
-    @SuppressLint("Range")
+    private fun init() {
+        binding = ActivityNotesGridBinding.inflate(layoutInflater)
+        quickAddBinding = QuickAddDialogBinding.inflate(layoutInflater)
+        databaseHelper = DatabaseHelper(this)
+        noteList = ArrayList()
+        setAdapter()
+        initData()
+        initListeners()
+        initNoteOnSwipe()
+        initSharedPref()
+        enableSignOut()
+    }
+
     private fun initData() {
         val cursor = databaseHelper.getNotes()
         var note: Note
@@ -86,6 +90,12 @@ class NotesGridActivity : AppCompatActivity() {
                 }
                 noteAdapter.notifyItemInserted(noteList.size)
             }
+        }
+    }
+
+    private fun initListeners() {
+        binding.menu.setOnClickListener {
+            showMenuOptions()
         }
         binding.fab.setOnClickListener {
             val intent =
@@ -139,13 +149,42 @@ class NotesGridActivity : AppCompatActivity() {
         editor = sp.edit()
     }
 
+    private fun setGridLayout() {
+        binding.notesRecyclerView.layoutManager =
+            GridLayoutManager(this@NotesGridActivity, 2)
+        binding.notesRecyclerView.adapter = noteAdapter
+    }
+
+    private fun setStaggeredLayout() {
+        binding.notesRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL)
+        binding.notesRecyclerView.adapter = noteAdapter
+    }
+
+    private fun setLinearLayout() {
+        binding.notesRecyclerView.layoutManager =
+            LinearLayoutManager(this@NotesGridActivity)
+        binding.notesRecyclerView.adapter = noteAdapter
+    }
+
     private fun setAdapter() {
         noteAdapter = NoteAdapter(this, noteList)
-        binding.apply {
-            notesRecyclerView.layoutManager = GridLayoutManager(this@NotesGridActivity, 2)
-            notesRecyclerView.adapter = noteAdapter
-        }
-        initNoteOnSwipe()
+        setGridLayout()
+    }
+
+    private fun showMenuOptions() {
+        val options = arrayOf("Grid", "Linear", "Staggered")
+        val builder = AlertDialog.Builder(this)
+            .setTitle("Choose Note layout")
+            .setSingleChoiceItems(options, -1) { d, pos ->
+                when (options[pos]) {
+                    "Grid" -> setGridLayout()
+                    "Linear" -> setLinearLayout()
+                    "Staggered" -> setStaggeredLayout()
+                }
+                d.dismiss()
+            }
+        builder.create().show()
     }
 
     private fun signOut() {
