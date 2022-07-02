@@ -17,4 +17,8 @@
     <string name="delete">delete</string>
     <string name="title">Title</string>
     <string name="body">Note Body</string>
+    <string name="show_menu">Show Menu</string>
+    <string name="call">Call</string>
+    <string name="sms">SMS</string>
+    <string name="quick_add_note">Quick Add Note</string>
 </resources>

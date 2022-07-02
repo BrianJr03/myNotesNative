@@ -9,9 +9,9 @@ data class Note(
     val body: String,
     val date: String,
     val passcode: String,
-    val bodyFontSize: Double = 11.0,
+    val bodyFontSize: Float = 14.0f,
     val textColor: Int,
-    val isStarred: Boolean,
-    val isLocked: Boolean,
+    val isStarred: String,
+    val isLocked: String,
     val index: Int
 ) : Parcelable

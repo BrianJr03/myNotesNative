@@ -7,7 +7,7 @@
     tools:context=".notes.NoteEditorActivity">
 
     <ImageButton
-        android:id="@+id/back"
+        android:id="@+id/back_icon"
         android:layout_width="@dimen/_40dp"
         android:layout_height="@dimen/_40dp"
         android:layout_marginStart="@dimen/_10dp"
@@ -32,7 +32,7 @@
         android:focusable="true"
         android:src="@drawable/color_lens_36"
         app:layout_constraintEnd_toStartOf="@id/star"
-        app:layout_constraintStart_toEndOf="@id/back"
+        app:layout_constraintStart_toEndOf="@id/back_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -45,7 +45,7 @@
         android:clickable="true"
         android:contentDescription="@string/star"
         android:focusable="true"
-        android:src="@drawable/star_icon_36"
+        android:src="@drawable/star_selector_36"
         app:layout_constraintEnd_toStartOf="@id/lock"
         app:layout_constraintStart_toEndOf="@id/color_lens"
         app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +60,7 @@
         android:clickable="true"
         android:contentDescription="@string/lock"
         android:focusable="true"
-        android:src="@drawable/locked_36"
+        android:src="@drawable/lock_selector_36"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -76,12 +76,12 @@
         android:contentDescription="@string/increase_text_size"
         android:focusable="true"
         android:src="@drawable/abc_36"
-        app:layout_constraintEnd_toStartOf="@id/save"
+        app:layout_constraintEnd_toStartOf="@id/save_icon"
         app:layout_constraintStart_toEndOf="@id/lock"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/save"
+        android:id="@+id/save_icon"
         android:layout_width="@dimen/_40dp"
         android:layout_height="@dimen/_40dp"
         android:layout_marginStart="@dimen/_10dp"
@@ -91,12 +91,12 @@
         android:contentDescription="@string/save"
         android:focusable="true"
         android:src="@drawable/save_36"
-        app:layout_constraintEnd_toStartOf="@id/delete"
+        app:layout_constraintEnd_toStartOf="@id/clear_icon"
         app:layout_constraintStart_toEndOf="@id/abc"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/delete"
+        android:id="@+id/clear_icon"
         android:layout_width="@dimen/_40dp"
         android:layout_height="@dimen/_40dp"
         android:layout_marginStart="@dimen/_10dp"
@@ -108,7 +108,7 @@
         android:focusable="true"
         android:src="@drawable/delete_36"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/save"
+        app:layout_constraintStart_toEndOf="@id/save_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText

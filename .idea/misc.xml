@@ -15,7 +15,9 @@
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/delete_36.xml" value="0.1235" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/gradient_note_bg_color.xml" value="0.1335" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/lock_selector.xml" value="0.1335" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/lock_selector_36.xml" value="0.1575" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/locked_36.xml" value="0.1235" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/loclk_selector_36.xml" value="0.1575" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/logout_36.xml" value="0.1575" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/menu_36.xml" value="0.1575" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/note_card_color_selector.xml" value="0.1335" />
@@ -24,13 +26,21 @@
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/settings_36.xml" value="0.1575" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/star_icon_36.xml" value="0.1235" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/star_selector.xml" value="0.1335" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/star_selector_36.xml" value="0.1575" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/starred_36.xml" value="0.1235" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/drawable/unlock_36.xml" value="0.1235" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/activity_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/activity_note_editor.xml" value="0.25" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/activity_notes_grid.xml" value="0.2" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/activity_sql.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/gradient_note_bg.xml" value="0.203125" />
         <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/note.xml" value="0.5" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/layout/quick_add_dialog.xml" value="0.203125" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/menu/context_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/menu/option_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/menu/pop_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/walte/OneDrive/Desktop/training/app_practice/myNotesNative/app/src/main/res/menu/popup_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

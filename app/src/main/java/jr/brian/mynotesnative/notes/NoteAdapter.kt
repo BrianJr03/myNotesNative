@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import jr.brian.mynotesnative.R
 import jr.brian.mynotesnative.databinding.NoteBinding
 
 class NoteAdapter(private val context: Context, private val notes: List<Note>) :
@@ -30,6 +31,7 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
                 val intent =
                     Intent(context, NoteEditorActivity::class.java)
                 intent.putExtra(NOTE_DATA, note)
+                intent.putExtra("mode", "update")
                 context.startActivity(intent)
             }
         }
@@ -40,8 +42,13 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
             binding.apply {
                 noteTitle.text = note.title
                 date.text = note.date
+                if (note.isStarred == "true") {
+                    starIcon.setImageResource(R.drawable.full_star_icon)
+                }
+                if (note.isLocked == "true") {
+                    lockIcon.setImageResource(R.drawable.lock_icon)
+                }
             }
-
         }
     }
 

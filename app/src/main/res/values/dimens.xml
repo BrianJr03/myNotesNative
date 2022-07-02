@@ -19,4 +19,6 @@
     <dimen name="app_name_text_size">40sp</dimen>
     <dimen name="_0dp">0dp</dimen>
     <dimen name="_16dp_neg">0dp</dimen>
+    <dimen name="_250dp">250dp</dimen>
+    <dimen name="_18sp">18sp</dimen>
 </resources>
