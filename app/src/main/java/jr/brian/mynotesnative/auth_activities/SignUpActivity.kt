@@ -1,6 +1,5 @@
 package jr.brian.mynotesnative.auth_activities
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -55,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
                     if (passwordEt.text.toString() == cPasswordEt.text.toString()) {
                         signUp(emailEt.text.toString(), passwordEt.text.toString())
                     } else showSnackbar("Passwords do not match")
-                } else showSnackbar("Fields may not be empty")
+                } else showSnackbar("Please ensure all fields aren't empty")
             }
         }
     }

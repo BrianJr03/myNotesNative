@@ -19,8 +19,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
                     "$BODY TEXT, " +
                     "$DATE TEXT, " +
                     "$PASSCODE TEXT, " +
-                    "$BODY_FONT_SIZE FLOAT, " +
-                    "$TEXT_COLOR INTEGER, " +
+                    "$BODY_FONT_SIZE TEXT, " +
+                    "$TEXT_COLOR TEXT, " +
                     "$IS_STARRED TEXT, " +
                     "$IS_LOCKED TEXT)"
                     )

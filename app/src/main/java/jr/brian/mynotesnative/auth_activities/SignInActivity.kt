@@ -1,6 +1,5 @@
 package jr.brian.mynotesnative.auth_activities
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -72,7 +71,7 @@ class SignInActivity : AppCompatActivity() {
                 showSnackbar("Account not found. Please create an account")
             }
         } else {
-            showSnackbar("Fields may not be empty")
+            showSnackbar("Please ensure both fields aren't empty")
         }
     }
 

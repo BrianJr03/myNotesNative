@@ -9,8 +9,8 @@ data class Note(
     val body: String,
     val date: String,
     val passcode: String,
-    val bodyFontSize: Float = 14.0f,
-    val textColor: Int,
+    val bodyFontSize: String = "14",
+    val textColor: String,
     val isStarred: String,
     val isLocked: String,
     val index: Int = 0

@@ -37,38 +37,6 @@ class NotesGridActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    private fun deleteNote(viewHolder: RecyclerView.ViewHolder) {
-        val pos = viewHolder.adapterPosition
-        databaseHelper.deleteNote(noteList[pos])
-        noteList.removeAt(pos)
-        favList.removeAt(pos)
-        noteAdapter.notifyItemRemoved(pos)
-        Snackbar.make(
-            binding.notesRecyclerView,
-            "Note Deleted",
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun enableSignOut() {
-        binding.signOut.setOnClickListener {
-            signOut()
-        }
-    }
-
-    @SuppressLint("Range")
-    private fun getCurrentNote(cursor: Cursor) = Note(
-        title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.TITLE)),
-        body = cursor.getString(cursor.getColumnIndex(DatabaseHelper.BODY)),
-        date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DATE)),
-        passcode = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PASSCODE)),
-        bodyFontSize = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.TITLE)),
-        textColor = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.TITLE)),
-        isStarred = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_STARRED)),
-        isLocked = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_LOCKED)),
-        index = noteList.size
-    )
-
     private fun init() {
 //        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         databaseHelper = DatabaseHelper(this)
@@ -183,6 +151,42 @@ class NotesGridActivity : AppCompatActivity() {
         editor = sp.edit()
     }
 
+    private fun deleteNote(viewHolder: RecyclerView.ViewHolder) {
+        val pos = viewHolder.adapterPosition
+        databaseHelper.deleteNote(noteList[pos])
+        noteList.removeAt(pos)
+        favList.apply {
+            if (isNotEmpty()) {
+                favList.removeAt(pos)
+            }
+        }
+        noteAdapter.notifyItemRemoved(pos)
+        Snackbar.make(
+            binding.notesRecyclerView,
+            "Note Deleted",
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun enableSignOut() {
+        binding.signOut.setOnClickListener {
+            signOut()
+        }
+    }
+
+    @SuppressLint("Range")
+    private fun getCurrentNote(cursor: Cursor) = Note(
+        title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.TITLE)),
+        body = cursor.getString(cursor.getColumnIndex(DatabaseHelper.BODY)),
+        date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DATE)),
+        passcode = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PASSCODE)),
+        bodyFontSize = cursor.getString(cursor.getColumnIndex(DatabaseHelper.BODY_FONT_SIZE)),
+        textColor = cursor.getString(cursor.getColumnIndex(DatabaseHelper.TEXT_COLOR)),
+        isStarred = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_STARRED)),
+        isLocked = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_LOCKED)),
+        index = noteList.size
+    )
+
     private fun setGridLayout() {
         binding.notesRecyclerView.layoutManager =
             GridLayoutManager(this@NotesGridActivity, 2)
@@ -233,5 +237,13 @@ class NotesGridActivity : AppCompatActivity() {
             )
         )
         finish()
+    }
+
+    override fun onBackPressed() {
+        val a = Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivity(a)
     }
 }

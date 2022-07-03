@@ -1,14 +1,13 @@
 package jr.brian.mynotesnative.notes
 
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import jr.brian.mynotesnative.R
 import jr.brian.mynotesnative.databinding.NoteBinding
 import jr.brian.mynotesnative.databinding.PasscodeDialogBinding
@@ -36,7 +35,9 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
             val note = notes[index]
             bind(note)
             itemView.setOnClickListener {
-                startNoteEditorActivity(note, index)
+                if (note.isLocked == "true") {
+                    showLockedNoteDialog(note, index)
+                } else startNoteEditorActivity(note, index)
             }
         }
     }
@@ -54,6 +55,40 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
                 }
             }
         }
+    }
+
+    private fun showLockedNoteDialog(note: Note, index: Int) {
+        val view = passcodeDialogBinding.root
+        val builder = AlertDialog.Builder(context).apply {
+            setView(view)
+            setTitle("Passcode Required")
+            setPositiveButton("View") { d, _ ->
+                val dialogPasscode = passcodeDialogBinding.passcodeEt.text.toString()
+                if (dialogPasscode != note.passcode) {
+                    showIncorrectCodeMsg()
+                } else {
+                    startNoteEditorActivity(note, index)
+                }
+                passcodeDialogBinding.passcodeEt.text?.clear()
+                d.dismiss()
+            }
+            setNegativeButton("Cancel") { d, _ ->
+                d.dismiss()
+            }
+        }
+        if (view.parent != null) {
+            (view.parent as ViewGroup).removeView(view)
+        }
+        builder.show()
+    }
+
+    private fun showIncorrectCodeMsg() {
+        Snackbar.make(
+            context,
+            binding.root,
+            "Incorrect passcode",
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun startNoteEditorActivity(note: Note, index: Int) {

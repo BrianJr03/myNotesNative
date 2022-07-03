@@ -8,18 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/enterPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10dp"
-            android:text="@string/enter_passcode"
-            android:textColor="@color/blueish_idk"
-            android:textSize="@dimen/_18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:padding="@dimen/_10dp">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/passcode_et"
@@ -28,7 +17,9 @@
             android:layout_marginTop="@dimen/_25dp"
             android:backgroundTint="@color/blueish_idk"
             android:hint="@string/ex_1234"
+            android:inputType="number"
             android:maxLines="3"
+            android:maxLength="10"
             android:padding="@dimen/_10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
