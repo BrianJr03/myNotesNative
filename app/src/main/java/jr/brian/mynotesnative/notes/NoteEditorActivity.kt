@@ -53,6 +53,10 @@ class NoteEditorActivity : AppCompatActivity() {
         if (intent.extras != null) {
             val note = intent.extras?.get(NOTE_DATA) as Note?
             if (note != null) {
+                textColor = note.textColor
+                passcode = note.passcode
+                bodyTextSize = note.bodyFontSize
+                index = intent.extras?.get(INDEX) as Int
                 mode = intent.extras?.getString("mode") ?: mode
                 binding.apply {
                     titleEt.setText(note.title)
@@ -61,8 +65,6 @@ class NoteEditorActivity : AppCompatActivity() {
                     bodyET.setTextColor(getTextColor(note.textColor))
                     bodyET.textSize = note.bodyFontSize.toFloat()
                     dateModified.text = note.date
-                    textColor = note.textColor
-                    bodyTextSize = note.bodyFontSize
                     colorLens.setColorFilter(getTextColor(note.textColor))
                     when (note.isStarred) {
                         "true" -> {
@@ -86,7 +88,6 @@ class NoteEditorActivity : AppCompatActivity() {
                     }
                 }
             }
-            index = intent.extras?.get(INDEX) as Int
         }
     }
 
