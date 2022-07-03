@@ -22,7 +22,6 @@ class LandingActivity : AppCompatActivity() {
         setContentView(binding.root)
 //        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         supportActionBar?.hide()
-        binding.animationView.setMinAndMaxFrame(67, 120)
         initEncryptedPrefs()
         initListeners()
         verifySignIn()

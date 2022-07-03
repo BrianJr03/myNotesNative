@@ -31,6 +31,7 @@ class NotesGridActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityNotesGridBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
         supportActionBar?.hide()
@@ -69,7 +70,6 @@ class NotesGridActivity : AppCompatActivity() {
     )
 
     private fun init() {
-        binding = ActivityNotesGridBinding.inflate(layoutInflater)
 //        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         databaseHelper = DatabaseHelper(this)
         noteList = ArrayList()
