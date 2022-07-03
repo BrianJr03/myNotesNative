@@ -171,7 +171,7 @@ class NoteEditorActivity : AppCompatActivity() {
 
     private fun toggleTextSize() {
         when (bodyTextSize.toFloat()) {
-            in 14.0f..27.0f  -> {
+            in 14.0f..27.0f -> {
                 binding.bodyET.textSize = 28.0f
                 bodyTextSize = "28"
             }
@@ -191,6 +191,7 @@ class NoteEditorActivity : AppCompatActivity() {
             val title = titleEt.text.toString()
             val body = bodyET.text.toString()
             if (title.isNotEmpty() && body.isNotEmpty()) {
+                if (passcode.isEmpty()) isLocked = false
                 when (mode) {
                     "update" ->
                         databaseHelper.updateNote(note)

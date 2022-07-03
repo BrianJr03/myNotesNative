@@ -18,14 +18,13 @@
             android:backgroundTint="@color/blueish_idk"
             android:hint="@string/ex_1234"
             android:inputType="number"
-            android:maxLines="3"
             android:maxLength="10"
+            android:maxLines="3"
             android:padding="@dimen/_10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

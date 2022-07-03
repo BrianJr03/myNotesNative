@@ -20,9 +20,9 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
-        android:layout_marginTop="@dimen/_40dp"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_0dp"
+        android:layout_marginTop="@dimen/_40dp"
         app:layout_constraintBottom_toTopOf="@id/sign_in_btn"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintWidth_percent="0.4"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/notepad_lottie"/>
+        app:lottie_rawRes="@raw/notepad_lottie" />
 
     <Button
         android:id="@+id/sign_in_btn"

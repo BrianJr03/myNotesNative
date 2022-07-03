@@ -7,13 +7,13 @@
     tools:context=".notes.NotesGridActivity">
 
     <ImageButton
-        android:contentDescription="@string/show_menu"
         android:id="@+id/menu"
         android:layout_width="@dimen/_40dp"
         android:layout_height="@dimen/_40dp"
         android:layout_marginStart="@dimen/_10dp"
         android:backgroundTint="@color/transparent_bg_color"
         android:clickable="true"
+        android:contentDescription="@string/show_menu"
         android:focusable="true"
         android:src="@drawable/menu_36"
         app:layout_constraintBottom_toTopOf="@id/guideline_grid"
@@ -41,12 +41,12 @@
         android:layout_marginEnd="@dimen/_10dp"
         android:backgroundTint="@color/transparent_bg_color"
         android:clickable="true"
+        android:contentDescription="@string/logout"
         android:focusable="true"
         android:src="@drawable/logout_36"
         app:layout_constraintBottom_toTopOf="@id/guideline_grid"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/logout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView

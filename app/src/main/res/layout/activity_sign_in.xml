@@ -30,13 +30,13 @@
         app:layout_constraintWidth_percent="0.4"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/notepad_lottie"/>
+        app:lottie_rawRes="@raw/notepad_lottie" />
 
     <EditText
-        android:layout_marginTop="@dimen/_40dp"
         android:id="@+id/email_et_signIn"
         android:layout_width="@dimen/_300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40dp"
         android:autofillHints=""
         android:backgroundTint="@color/blueish_idk"
         android:hint="@string/email"
