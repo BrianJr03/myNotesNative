@@ -28,7 +28,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db?.execSQL(("DROP TABLE IF EXISTS $TABLE_NAME"))
         onCreate(db)
     }
 
@@ -71,7 +71,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
     }
 
     fun getNotes(): Cursor? {
-        return readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
+        return readableDatabase.rawQuery(("SELECT * FROM $TABLE_NAME"), null)
     }
 
     companion object {

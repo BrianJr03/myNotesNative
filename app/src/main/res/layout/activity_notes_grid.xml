@@ -7,6 +7,7 @@
     tools:context=".notes.NotesGridActivity">
 
     <ImageButton
+        android:contentDescription="@string/show_menu"
         android:id="@+id/menu"
         android:layout_width="@dimen/_40dp"
         android:layout_height="@dimen/_40dp"
@@ -20,9 +21,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="myNotesNative"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/mynotesnative"
         android:textColor="@color/blueish_idk"
         android:textSize="@dimen/note_title_size"
         app:layout_constraintBottom_toTopOf="@id/guideline_grid"
@@ -41,7 +45,8 @@
         android:src="@drawable/logout_36"
         app:layout_constraintBottom_toTopOf="@id/guideline_grid"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/logout" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -67,6 +72,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/teal_200" />
+
+    <ImageView
+        android:id="@+id/no_notes_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/no_notes"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_grid"

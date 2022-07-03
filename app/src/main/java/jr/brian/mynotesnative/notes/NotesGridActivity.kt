@@ -5,30 +5,34 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.*
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.android.material.snackbar.Snackbar
-import jr.brian.mynotesnative.MainActivity
+import jr.brian.mynotesnative.R
+import jr.brian.mynotesnative.auth_activities.SignInActivity
 import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
-import jr.brian.mynotesnative.databinding.QuickAddDialogBinding
 import jr.brian.mynotesnative.db.DatabaseHelper
 
 class NotesGridActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesGridBinding
-    private lateinit var quickAddBinding: QuickAddDialogBinding
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var noteAdapter: NoteAdapter
     private lateinit var noteList: ArrayList<Note>
+    private lateinit var favList: ArrayList<Note>
     private lateinit var sp: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
 
+    private var areAllNotesDisplayed = true
+//    private lateinit var bundle: Bundle
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
         setContentView(binding.root)
+        init()
         supportActionBar?.hide()
     }
 
@@ -36,6 +40,7 @@ class NotesGridActivity : AppCompatActivity() {
         val pos = viewHolder.adapterPosition
         databaseHelper.deleteNote(noteList[pos])
         noteList.removeAt(pos)
+        favList.removeAt(pos)
         noteAdapter.notifyItemRemoved(pos)
         Snackbar.make(
             binding.notesRecyclerView,
@@ -65,11 +70,15 @@ class NotesGridActivity : AppCompatActivity() {
 
     private fun init() {
         binding = ActivityNotesGridBinding.inflate(layoutInflater)
-        quickAddBinding = QuickAddDialogBinding.inflate(layoutInflater)
+//        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         databaseHelper = DatabaseHelper(this)
         noteList = ArrayList()
-        setAdapter()
+        favList = ArrayList()
+        setAdapter(noteList)
         initData()
+        if (noteList.size < 1) {
+            binding.noNotesIv.visibility = View.VISIBLE
+        }
         initListeners()
         initNoteOnSwipe()
         initSharedPref()
@@ -83,9 +92,15 @@ class NotesGridActivity : AppCompatActivity() {
             if (cursor.count != 0) {
                 cursor.moveToFirst()
                 note = getCurrentNote(cursor)
+                if (note.isStarred == "true") {
+                    favList.add(note)
+                }
                 noteList.add(note)
                 while (cursor.moveToNext()) {
                     note = getCurrentNote(cursor)
+                    if (note.isStarred == "true") {
+                        favList.add(note)
+                    }
                     noteList.add(note)
                 }
                 noteAdapter.notifyItemInserted(noteList.size)
@@ -94,12 +109,33 @@ class NotesGridActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
+        binding.pageTitle.setOnClickListener {
+            areAllNotesDisplayed = !areAllNotesDisplayed
+            if (areAllNotesDisplayed) {
+                binding.pageTitle.text = getString(R.string.mynotesnative)
+                setAdapter(noteList)
+                if (noteList.size < 1) {
+                    binding.noNotesIv.visibility = View.VISIBLE
+                } else {
+                    binding.noNotesIv.visibility = View.INVISIBLE
+                }
+            } else {
+                binding.pageTitle.text = getString(R.string.favorites)
+                setAdapter(favList)
+                if (favList.size < 1) {
+                    binding.noNotesIv.visibility = View.VISIBLE
+                } else {
+                    binding.noNotesIv.visibility = View.INVISIBLE
+                }
+            }
+        }
         binding.menu.setOnClickListener {
             showMenuOptions()
         }
         binding.fab.setOnClickListener {
             val intent =
                 Intent(this, NoteEditorActivity::class.java)
+            intent.putExtra("index", noteList.size)
             startActivity(intent)
         }
     }
@@ -137,15 +173,13 @@ class NotesGridActivity : AppCompatActivity() {
     private fun initSharedPref() {
         val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
         val mainKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
-
         sp = EncryptedSharedPreferences.create(
-            MainActivity.FILENAME,
+            SignInActivity.FILENAME,
             mainKeyAlias,
             this,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
         )
-
         editor = sp.edit()
     }
 
@@ -157,7 +191,7 @@ class NotesGridActivity : AppCompatActivity() {
 
     private fun setStaggeredLayout() {
         binding.notesRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL)
+            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.notesRecyclerView.adapter = noteAdapter
     }
 
@@ -167,8 +201,8 @@ class NotesGridActivity : AppCompatActivity() {
         binding.notesRecyclerView.adapter = noteAdapter
     }
 
-    private fun setAdapter() {
-        noteAdapter = NoteAdapter(this, noteList)
+    private fun setAdapter(list: List<Note>) {
+        noteAdapter = NoteAdapter(this, list)
         setGridLayout()
     }
 
@@ -192,7 +226,12 @@ class NotesGridActivity : AppCompatActivity() {
             clear()
             apply()
         }
-        startActivity(Intent(this@NotesGridActivity, MainActivity::class.java))
+        startActivity(
+            Intent(
+                this@NotesGridActivity,
+                SignInActivity::class.java
+            )
+        )
         finish()
     }
 }

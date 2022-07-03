@@ -14,10 +14,7 @@
         android:theme="@style/Theme.MyNotesNative"
         tools:targetApi="31">
         <activity
-            android:name=".notes.NotesGridActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".LandingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".auth_activities.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".notes.NotesGridActivity"
+            android:exported="true" />
+        <activity
+            android:name=".auth_activities.SignInActivity"
+            android:exported="false"/>
         <activity
             android:name=".notes.NoteEditorActivity"
             android:exported="false" />

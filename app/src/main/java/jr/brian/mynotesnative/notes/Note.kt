@@ -13,5 +13,5 @@ data class Note(
     val textColor: Int,
     val isStarred: String,
     val isLocked: String,
-    val index: Int
+    val index: Int = 0
 ) : Parcelable

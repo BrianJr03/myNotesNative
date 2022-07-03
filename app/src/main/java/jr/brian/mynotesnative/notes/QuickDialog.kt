@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import jr.brian.mynotesnative.databinding.QuickAddDialogBinding
+import jr.brian.mynotesnative.databinding.PasscodeDialogBinding
 
 class QuickDialog : DialogFragment() {
 
-    private lateinit var binding: QuickAddDialogBinding
+    private lateinit var binding: PasscodeDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = QuickAddDialogBinding.inflate(layoutInflater, container, false)
+        binding = PasscodeDialogBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

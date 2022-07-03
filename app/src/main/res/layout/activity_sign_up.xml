@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".auth_activities.SignInActivity">
 
     <TextView
         android:id="@+id/app_tv"
@@ -18,18 +18,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/app_icon_100"
-        app:layout_constraintBottom_toTopOf="@id/email_et_secure"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="@dimen/_0dp"
+        app:layout_constraintBottom_toTopOf="@id/email_et"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_tv" />
+        app:layout_constraintTop_toBottomOf="@id/app_tv"
+        app:layout_constraintWidth_percent="0.4"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/notepad_lottie"/>
 
     <EditText
-        android:id="@+id/email_et_secure"
+        android:layout_marginTop="@dimen/_40dp"
+        android:id="@+id/email_et"
         android:layout_width="@dimen/_300dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -42,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/password_et_secure"
+        android:id="@+id/password_et"
         android:layout_width="@dimen/_300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10dp"
@@ -52,18 +57,32 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email_et_secure" />
+        app:layout_constraintTop_toBottomOf="@id/email_et" />
+
+    <EditText
+        android:id="@+id/cPassword_et"
+        android:layout_width="@dimen/_300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:autofillHints=""
+        android:backgroundTint="@color/blueish_idk"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password_et" />
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/sign_up_btn"
         android:layout_width="@dimen/_300dp"
+        app:layout_goneMarginTop="@dimen/_10dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_40dp"
         android:backgroundTint="@color/blueish_idk"
-        android:text="@string/sign_in"
+        android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password_et_secure" />
+        app:layout_constraintTop_toBottomOf="@id/cPassword_et" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_main"

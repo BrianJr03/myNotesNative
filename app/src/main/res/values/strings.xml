@@ -21,4 +21,12 @@
     <string name="call">Call</string>
     <string name="sms">SMS</string>
     <string name="quick_add_note">Quick Add Note</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_passcode">Enter Passcode</string>
+    <string name="ex_1234">ex: 1234</string>
+    <string name="mynotesnative">myNotesNative</string>
+    <string name="logout">logout</string>
+    <string name="favorites">Favorites</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
