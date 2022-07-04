@@ -17,8 +17,6 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
 
     private lateinit var binding: NoteBinding
     private lateinit var passcodeDialogBinding: PasscodeDialogBinding
-//    private var bundle: Bundle =
-//        ActivityOptions.makeSceneTransitionAnimation(context as AppCompatActivity).toBundle()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

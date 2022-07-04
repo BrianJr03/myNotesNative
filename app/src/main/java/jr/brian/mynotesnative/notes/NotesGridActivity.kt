@@ -31,7 +31,6 @@ class NotesGridActivity : AppCompatActivity() {
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private var isDrawerOpen = false
     private var areAllNotesDisplayed = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +46,6 @@ class NotesGridActivity : AppCompatActivity() {
     private fun init() {
         initLists()
         setAdapter(noteList)
-        initDB()
         initData()
         initDrawer()
         initListeners()
@@ -55,13 +53,10 @@ class NotesGridActivity : AppCompatActivity() {
         initSharedPref()
     }
 
-    private fun initDB() {
-        databaseHelper = DatabaseHelper(this)
-    }
-
     private fun initData() {
-        val cursor = databaseHelper.getNotes()
         var note: Note
+        databaseHelper = DatabaseHelper(this)
+        val cursor = databaseHelper.getNotes()
         if (cursor != null) {
             if (cursor.count != 0) {
                 cursor.moveToFirst()
@@ -128,16 +123,7 @@ class NotesGridActivity : AppCompatActivity() {
 
     private fun initListeners() {
         binding.menu.setOnClickListener {
-            isDrawerOpen = when (isDrawerOpen) {
-                true -> {
-                    binding.drawerLayout.closeDrawer(GravityCompat.START)
-                    false
-                }
-                false -> {
-                    binding.drawerLayout.openDrawer(GravityCompat.START)
-                    true
-                }
-            }
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
         binding.pageTitle.setOnClickListener {
             toggleFavorites()

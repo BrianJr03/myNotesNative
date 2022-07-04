@@ -16,7 +16,6 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var encryptedSharedPrefs: SharedPreferences
     private lateinit var databaseHelper: DatabaseHelper
-//    private lateinit var bundle: Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +23,6 @@ class SignUpActivity : AppCompatActivity() {
         databaseHelper = DatabaseHelper(applicationContext)
         setContentView(binding.root)
         binding.animationView.setMinAndMaxFrame(67, 120)
-//        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         supportActionBar?.hide()
         initEncryptedPrefs()
         initView()

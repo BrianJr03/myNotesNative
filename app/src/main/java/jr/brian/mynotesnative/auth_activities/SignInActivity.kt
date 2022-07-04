@@ -15,14 +15,12 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var encryptedSharedPrefs: SharedPreferences
     private lateinit var databaseHelper: DatabaseHelper
-//    private lateinit var bundle :Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(applicationContext)
         setContentView(binding.root)
-//        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         binding.animationView.setMinAndMaxFrame(67, 120)
         supportActionBar?.hide()
         initEncryptedPrefs()

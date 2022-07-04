@@ -14,13 +14,11 @@ import jr.brian.mynotesnative.notes.NotesGridActivity
 class LandingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLandingBinding
     private lateinit var encryptedSharedPrefs: SharedPreferences
-//    private lateinit var bundle : Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         supportActionBar?.hide()
         initEncryptedPrefs()
         initListeners()

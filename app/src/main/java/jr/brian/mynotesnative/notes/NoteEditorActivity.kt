@@ -22,7 +22,6 @@ class NoteEditorActivity : AppCompatActivity() {
     private lateinit var gridBinding: ActivityNotesGridBinding
     private lateinit var passcodeDialogBinding: PasscodeDialogBinding
     private lateinit var databaseHelper: DatabaseHelper
-//    private lateinit var bundle: Bundle
 
     private val current = LocalDateTime.now()
     private val formatter = DateTimeFormatter.ofPattern("M/d/yyyy")
@@ -43,7 +42,6 @@ class NoteEditorActivity : AppCompatActivity() {
         passcodeDialogBinding = PasscodeDialogBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(this)
         setContentView(binding.root)
-//        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         supportActionBar?.hide()
         initView()
         initListeners()
