@@ -205,7 +205,7 @@ class NoteEditorActivity : AppCompatActivity() {
     }
 
     private fun showColorOptions() {
-        val options = arrayOf("Blueish-idk", "Pink", "Green", "Red", "White")
+        val options = arrayOf("Blueish_idk", "Pink", "Green", "Red", "White")
         val builder = AlertDialog.Builder(this)
             .setTitle("Choose Text Color")
             .setSingleChoiceItems(options, -1) { d, pos ->

@@ -139,6 +139,9 @@ class NotesGridActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.pageTitle.setOnClickListener {
+            toggleFavorites()
+        }
         binding.fab.setOnClickListener {
             val intent =
                 Intent(this, NoteEditorActivity::class.java)
