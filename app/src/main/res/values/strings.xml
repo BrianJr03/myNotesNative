@@ -25,8 +25,14 @@
     <string name="enter_passcode">Enter Passcode</string>
     <string name="ex_1234">ex: 1234</string>
     <string name="mynotesnative">myNotesNative</string>
-    <string name="logout">logout</string>
+    <string name="sign_out">Sign Out</string>
     <string name="favorites">Favorites</string>
     <string name="sign_up">Sign Up</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="grid_layout">Grid Layout</string>
+    <string name="linear_layout">Linear Layout</string>
+    <string name="st_grid_layout">Staggered Grid Layout</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="toggle_favorites">Toggle Favorites</string>
 </resources>

@@ -5,9 +5,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.*
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
@@ -15,42 +17,46 @@ import com.google.android.material.snackbar.Snackbar
 import jr.brian.mynotesnative.R
 import jr.brian.mynotesnative.auth_activities.SignInActivity
 import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
+import jr.brian.mynotesnative.databinding.NavHeaderBinding
 import jr.brian.mynotesnative.db.DatabaseHelper
 
 class NotesGridActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesGridBinding
+    private lateinit var navHeaderBinding: NavHeaderBinding
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var noteAdapter: NoteAdapter
     private lateinit var noteList: ArrayList<Note>
     private lateinit var favList: ArrayList<Note>
     private lateinit var sp: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
+    private lateinit var toggle: ActionBarDrawerToggle
 
+    private var isDrawerOpen = false
     private var areAllNotesDisplayed = true
-//    private lateinit var bundle: Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotesGridBinding.inflate(layoutInflater)
+        navHeaderBinding = NavHeaderBinding.inflate(layoutInflater)
+        navHeaderBinding.animationView.setMinAndMaxFrame(67, 120)
         setContentView(binding.root)
         init()
         supportActionBar?.hide()
     }
 
     private fun init() {
-//        bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-        databaseHelper = DatabaseHelper(this)
-        noteList = ArrayList()
-        favList = ArrayList()
+        initLists()
         setAdapter(noteList)
+        initDB()
         initData()
-        if (noteList.size < 1) {
-            binding.noNotesIv.visibility = View.VISIBLE
-        }
+        initDrawer()
         initListeners()
         initNoteOnSwipe()
         initSharedPref()
-        enableSignOut()
+    }
+
+    private fun initDB() {
+        databaseHelper = DatabaseHelper(this)
     }
 
     private fun initData() {
@@ -74,31 +80,64 @@ class NotesGridActivity : AppCompatActivity() {
                 noteAdapter.notifyItemInserted(noteList.size)
             }
         }
+        if (noteList.size < 1) {
+            binding.noNotesIv.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initDrawer() {
+        toggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            R.string.open, R.string.close
+        )
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.grid_item -> {
+                    setGridLayout()
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.linear_item -> {
+                    setLinearLayout()
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.st_grid_item -> {
+                    setStaggeredLayout()
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.toggle_favorites -> {
+                    toggleFavorites()
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.sign_out_item -> {
+                    signOut()
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+            }
+            true
+        }
+    }
+
+    private fun initLists() {
+        noteList = ArrayList()
+        favList = ArrayList()
     }
 
     private fun initListeners() {
-        binding.pageTitle.setOnClickListener {
-            areAllNotesDisplayed = !areAllNotesDisplayed
-            if (areAllNotesDisplayed) {
-                binding.pageTitle.text = getString(R.string.mynotesnative)
-                setAdapter(noteList)
-                if (noteList.size < 1) {
-                    binding.noNotesIv.visibility = View.VISIBLE
-                } else {
-                    binding.noNotesIv.visibility = View.INVISIBLE
+        binding.menu.setOnClickListener {
+            isDrawerOpen = when (isDrawerOpen) {
+                true -> {
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    false
                 }
-            } else {
-                binding.pageTitle.text = getString(R.string.favorites)
-                setAdapter(favList)
-                if (favList.size < 1) {
-                    binding.noNotesIv.visibility = View.VISIBLE
-                } else {
-                    binding.noNotesIv.visibility = View.INVISIBLE
+                false -> {
+                    binding.drawerLayout.openDrawer(GravityCompat.START)
+                    true
                 }
             }
-        }
-        binding.menu.setOnClickListener {
-            showMenuOptions()
         }
         binding.fab.setOnClickListener {
             val intent =
@@ -155,23 +194,19 @@ class NotesGridActivity : AppCompatActivity() {
         val pos = viewHolder.adapterPosition
         databaseHelper.deleteNote(noteList[pos])
         noteList.removeAt(pos)
-        favList.apply {
-            if (isNotEmpty()) {
-                favList.removeAt(pos)
-            }
-        }
+//        favList.apply {
+//            if (isNotEmpty()) {
+//                if (favList.contains(noteList[pos])) {
+//                    favList.removeAt(pos)
+//                }
+//            }
+//        }
         noteAdapter.notifyItemRemoved(pos)
         Snackbar.make(
             binding.notesRecyclerView,
             "Note Deleted",
             Snackbar.LENGTH_SHORT
         ).show()
-    }
-
-    private fun enableSignOut() {
-        binding.signOut.setOnClickListener {
-            signOut()
-        }
     }
 
     @SuppressLint("Range")
@@ -186,6 +221,27 @@ class NotesGridActivity : AppCompatActivity() {
         isLocked = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_LOCKED)),
         index = noteList.size
     )
+
+    private fun toggleFavorites() {
+        areAllNotesDisplayed = !areAllNotesDisplayed
+        if (areAllNotesDisplayed) {
+            binding.pageTitle.text = getString(R.string.mynotesnative)
+            setAdapter(noteList)
+            if (noteList.size < 1) {
+                binding.noNotesIv.visibility = View.VISIBLE
+            } else {
+                binding.noNotesIv.visibility = View.INVISIBLE
+            }
+        } else {
+            binding.pageTitle.text = getString(R.string.favorites)
+            setAdapter(favList)
+            if (favList.size < 1) {
+                binding.noNotesIv.visibility = View.VISIBLE
+            } else {
+                binding.noNotesIv.visibility = View.INVISIBLE
+            }
+        }
+    }
 
     private fun setGridLayout() {
         binding.notesRecyclerView.layoutManager =
@@ -210,21 +266,6 @@ class NotesGridActivity : AppCompatActivity() {
         setGridLayout()
     }
 
-    private fun showMenuOptions() {
-        val options = arrayOf("Grid", "Linear", "Staggered")
-        val builder = AlertDialog.Builder(this)
-            .setTitle("Choose Note layout")
-            .setSingleChoiceItems(options, -1) { d, pos ->
-                when (options[pos]) {
-                    "Grid" -> setGridLayout()
-                    "Linear" -> setLinearLayout()
-                    "Staggered" -> setStaggeredLayout()
-                }
-                d.dismiss()
-            }
-        builder.create().show()
-    }
-
     private fun signOut() {
         editor.apply {
             clear()
@@ -245,5 +286,12 @@ class NotesGridActivity : AppCompatActivity() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         startActivity(a)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
