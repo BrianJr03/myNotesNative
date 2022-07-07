@@ -1,4 +1,4 @@
-package jr.brian.mynotesnative.notes
+package jr.brian.mynotesnative.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

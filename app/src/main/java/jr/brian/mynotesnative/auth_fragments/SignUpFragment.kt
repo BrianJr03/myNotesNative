@@ -4,18 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.android.volley.Request
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import jr.brian.mynotesnative.R
+import jr.brian.mynotesnative.constant.Constant.BASE_URL
+import jr.brian.mynotesnative.constant.Constant.SIGN_UP_END_POINT
 import jr.brian.mynotesnative.db.DatabaseHelper
 import jr.brian.mynotesnative.notes.NotesGridActivity
+import org.json.JSONObject
 
 
 class SignUpFragment : Fragment() {
@@ -62,10 +71,32 @@ class SignUpFragment : Fragment() {
                 || cPasswordEt.text.isNotEmpty()
             ) {
                 if (passwordEt.text.toString() == cPasswordEt.text.toString()) {
-                    signUp(emailEt.text.toString(), passwordEt.text.toString(), view.context)
+                    val data = JSONObject().apply {
+                        // TODO : Create fields for name and number
+                        put("full_name", "Brian Jr")
+                        put("mobile_no", 2122234566)
+                        put("email_id", emailEt.text.toString())
+                        put("password", passwordEt.text.toString())
+                    }
+//                    signUp(emailEt.text.toString(), passwordEt.text.toString(), view.context)
+                    makeSignUpApiRequest(view, data)
                 } else showSnackbar("Passwords do not match", view)
             } else showSnackbar("Please ensure all fields aren't empty", view)
         }
+    }
+
+    private fun makeSignUpApiRequest(view: View, data: JSONObject) {
+        val cpb = view.findViewById<ProgressBar>(R.id.progress_bar_signUp)
+        cpb.visibility = View.VISIBLE
+        val requestQueue = Volley.newRequestQueue(view.context)
+        val url = BASE_URL + SIGN_UP_END_POINT
+        val request = JsonObjectRequest(Request.Method.POST, url, data, { response: JSONObject ->
+            val msg = response.getString("message")
+            Log.i("msg", msg)
+            cpb.visibility = View.GONE
+            startHomeActivity(view.context)
+        }, { error: VolleyError -> error.printStackTrace() })
+        requestQueue.add(request)
     }
 
     private fun showSnackbar(str: String, view: View) {
@@ -77,15 +108,15 @@ class SignUpFragment : Fragment() {
         ).show()
     }
 
-    private fun signUp(email: String, password: String, context: Context) {
-        editor.apply {
-            putString(EMAIL, email)
-            putString(PASSWORD, password)
-            if (commit()) {
-                startHomeActivity(context)
-            }
-        }
-    }
+//    private fun signUp(email: String, password: String, context: Context) {
+//        editor.apply {
+//            putString(EMAIL, email)
+//            putString(PASSWORD, password)
+//            if (commit()) {
+//                startHomeActivity(context)
+//            }
+//        }
+//    }
 
     private fun startHomeActivity(context: Context) {
         startActivity(Intent(context, NotesGridActivity::class.java))
@@ -93,7 +124,7 @@ class SignUpFragment : Fragment() {
 
     companion object {
         const val FILENAME = "login-details"
-        const val EMAIL = "email"
-        const val PASSWORD = "password"
+//        const val EMAIL = "email"
+//        const val PASSWORD = "password"
     }
 }

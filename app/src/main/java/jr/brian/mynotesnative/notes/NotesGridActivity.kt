@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import jr.brian.mynotesnative.LandingActivity
 import jr.brian.mynotesnative.R
 import jr.brian.mynotesnative.auth_activities.SignInActivity
+import jr.brian.mynotesnative.data.Note
 import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
 import jr.brian.mynotesnative.databinding.NavHeaderBinding
 import jr.brian.mynotesnative.db.DatabaseHelper

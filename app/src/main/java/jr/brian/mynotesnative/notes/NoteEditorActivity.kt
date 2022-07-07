@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import jr.brian.mynotesnative.R
+import jr.brian.mynotesnative.data.Note
 import jr.brian.mynotesnative.databinding.ActivityNoteEditorBinding
 import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
 import jr.brian.mynotesnative.databinding.PasscodeDialogBinding
