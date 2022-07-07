@@ -18,42 +18,87 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/app_tv"
+        app:layout_constraintStart_toStartOf="@id/app_tv"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_0dp"
         android:layout_marginTop="@dimen/_40dp"
-        app:layout_constraintBottom_toTopOf="@id/sign_in_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_tv"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.4"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/notepad_lottie" />
 
-    <Button
-        android:id="@+id/sign_in_btn"
-        android:layout_width="@dimen/_300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_40dp"
-        android:backgroundTint="@color/blueish_idk"
-        android:text="@string/sign_in"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/animation_view" />
+    <!--    <Button-->
+    <!--        android:id="@+id/sign_in_btn"-->
+    <!--        android:layout_width="@dimen/_300dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="@dimen/_40dp"-->
+    <!--        android:backgroundTint="@color/blueish_idk"-->
+    <!--        android:text="@string/sign_in"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/animation_view" />-->
 
-    <Button
-        android:id="@+id/sign_up_btn"
-        android:layout_width="@dimen/_300dp"
+    <!--    <Button-->
+    <!--        android:id="@+id/sign_up_btn"-->
+    <!--        android:layout_width="@dimen/_300dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="@dimen/_40dp"-->
+    <!--        android:backgroundTint="@color/blueish_idk"-->
+    <!--        android:text="@string/sign_up"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/sign_in_btn" />-->
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_40dp"
-        android:backgroundTint="@color/blueish_idk"
-        android:text="@string/sign_up"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_btn" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/signin_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:text="@string/sign_in"
+            android:textColor="@color/blueish_idk"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/signup_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:textColor="@color/blueish_idk"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+
+    </RadioGroup>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_main"

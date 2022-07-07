@@ -52,15 +52,17 @@
             tools:layout_editor_absoluteY="0dp"
             tools:listitem="@layout/note" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fab"
+            android:text="Add Note"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/_16dp"
             android:backgroundTint="@color/blueish_idk"
             android:contentDescription="@string/add_note"
-            android:src="@drawable/add_note_icon"
+            app:icon="@drawable/add_note_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="@color/teal_200" />

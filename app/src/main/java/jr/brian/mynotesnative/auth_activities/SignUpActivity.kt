@@ -22,10 +22,10 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(applicationContext)
         setContentView(binding.root)
-        binding.animationView.setMinAndMaxFrame(67, 120)
-        supportActionBar?.hide()
-        initEncryptedPrefs()
-        initView()
+//        binding.animationView.setMinAndMaxFrame(67, 120)
+//        supportActionBar?.hide()
+//        initEncryptedPrefs()
+//        initView()
     }
 
     private fun initEncryptedPrefs() {
@@ -42,20 +42,20 @@ class SignUpActivity : AppCompatActivity() {
         editor = encryptedSharedPrefs.edit()
     }
 
-    private fun initView() {
-        binding.apply {
-            binding.signUpBtn.setOnClickListener {
-                if (emailEt.text.isNotEmpty()
-                    || passwordEt.text.isNotEmpty()
-                    || cPasswordEt.text.isNotEmpty()
-                ) {
-                    if (passwordEt.text.toString() == cPasswordEt.text.toString()) {
-                        signUp(emailEt.text.toString(), passwordEt.text.toString())
-                    } else showSnackbar("Passwords do not match")
-                } else showSnackbar("Please ensure all fields aren't empty")
-            }
-        }
-    }
+//    private fun initView() {
+//        binding.apply {
+//            binding.signUpBtn.setOnClickListener {
+//                if (emailEt.text.isNotEmpty()
+//                    || passwordEt.text.isNotEmpty()
+//                    || cPasswordEt.text.isNotEmpty()
+//                ) {
+//                    if (passwordEt.text.toString() == cPasswordEt.text.toString()) {
+//                        signUp(emailEt.text.toString(), passwordEt.text.toString())
+//                    } else showSnackbar("Passwords do not match")
+//                } else showSnackbar("Please ensure all fields aren't empty")
+//            }
+//        }
+//    }
 
     private fun showSnackbar(str: String) {
         Snackbar.make(

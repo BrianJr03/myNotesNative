@@ -21,4 +21,5 @@
     <dimen name="_16dp_neg">0dp</dimen>
     <dimen name="_250dp">250dp</dimen>
     <dimen name="_18sp">18sp</dimen>
+    <dimen name="_20dp">20dp</dimen>
 </resources>

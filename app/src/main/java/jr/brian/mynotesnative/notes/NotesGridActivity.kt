@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.*
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.android.material.snackbar.Snackbar
+import jr.brian.mynotesnative.LandingActivity
 import jr.brian.mynotesnative.R
 import jr.brian.mynotesnative.auth_activities.SignInActivity
 import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
@@ -263,7 +264,7 @@ class NotesGridActivity : AppCompatActivity() {
         startActivity(
             Intent(
                 this@NotesGridActivity,
-                SignInActivity::class.java
+                LandingActivity::class.java
             )
         )
         finish()

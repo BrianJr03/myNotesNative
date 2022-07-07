@@ -93,6 +93,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:maxLines="3"
         android:id="@+id/title_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,15 +3,19 @@ package jr.brian.mynotesnative
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import jr.brian.mynotesnative.auth_activities.SignInActivity
-import jr.brian.mynotesnative.auth_activities.SignUpActivity
+import jr.brian.mynotesnative.auth_fragments.SignInFragment
+import jr.brian.mynotesnative.auth_fragments.SignUpFragment
 import jr.brian.mynotesnative.databinding.ActivityLandingBinding
 import jr.brian.mynotesnative.notes.NotesGridActivity
+import jr.brian.mynotesnative.util.replaceFragment
 
-class LandingActivity : AppCompatActivity() {
+class LandingActivity : AppCompatActivity(), RadioGroup.OnCheckedChangeListener {
     private lateinit var binding: ActivityLandingBinding
     private lateinit var encryptedSharedPrefs: SharedPreferences
 
@@ -23,6 +27,16 @@ class LandingActivity : AppCompatActivity() {
         initEncryptedPrefs()
         initListeners()
         verifySignIn()
+    }
+
+    override fun onCheckedChanged(group: RadioGroup, checkId: Int) {
+        val checkRadioButton = group.findViewById<RadioButton>(group.checkedRadioButtonId)
+        checkRadioButton?.let {
+            when (checkRadioButton.id) {
+                R.id.signin_rb -> replaceFragment(R.id.container, SignInFragment())
+                else -> replaceFragment(R.id.container, SignUpFragment())
+            }
+        }
     }
 
     private fun initEncryptedPrefs() {
@@ -38,16 +52,18 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        binding.signInBtn.setOnClickListener {
-            startActivity(
-                Intent(this, SignInActivity::class.java)
-            )
-        }
-        binding.signUpBtn.setOnClickListener {
-            startActivity(
-                Intent(this, SignUpActivity::class.java)
-            )
-        }
+        val group = findViewById<RadioGroup>(R.id.radio_group)
+        group.setOnCheckedChangeListener(this)
+//        binding.signInBtn.setOnClickListener {
+//            startActivity(
+//                Intent(this, SignInActivity::class.java)
+//            )
+//        }
+//        binding.signUpBtn.setOnClickListener {
+//            startActivity(
+//                Intent(this, SignUpActivity::class.java)
+//            )
+//        }
     }
 
     private fun startHomeActivity() {
@@ -55,7 +71,8 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun verifySignIn() {
-        if (encryptedSharedPrefs.contains(SignInActivity.EMAIL) && encryptedSharedPrefs.contains(
+        if (encryptedSharedPrefs.contains(SignInActivity.EMAIL)
+            && encryptedSharedPrefs.contains(
                 SignInActivity.PASSWORD
             )
         ) {

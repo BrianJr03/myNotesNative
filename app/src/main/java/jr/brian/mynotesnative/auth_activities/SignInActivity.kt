@@ -21,10 +21,9 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(applicationContext)
         setContentView(binding.root)
-        binding.animationView.setMinAndMaxFrame(67, 120)
         supportActionBar?.hide()
         initEncryptedPrefs()
-        initView()
+//        initView()
     }
 
     private fun initEncryptedPrefs() {
@@ -40,13 +39,13 @@ class SignInActivity : AppCompatActivity() {
         )
     }
 
-    private fun initView() {
-        binding.apply {
-            binding.signInBTN.setOnClickListener {
-                verifySignIn()
-            }
-        }
-    }
+//    private fun initView() {
+//        binding.apply {
+//            binding.signInBTN.setOnClickListener {
+//                verifySignIn()
+//            }
+//        }
+//    }
 
     private fun startHomeActivity() {
         startActivity(Intent(this, NotesGridActivity::class.java))
@@ -61,17 +60,17 @@ class SignInActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun verifySignIn() {
-        if (binding.emailEtSignIn.text.isNotEmpty() && binding.passwordEtSignIn.text.isNotEmpty()) {
-            if (encryptedSharedPrefs.contains(EMAIL) && encryptedSharedPrefs.contains(PASSWORD)) {
-                startHomeActivity()
-            } else {
-                showSnackbar("Account not found. Please create an account")
-            }
-        } else {
-            showSnackbar("Please ensure both fields aren't empty")
-        }
-    }
+//    private fun verifySignIn() {
+//        if (binding.emailEtSignIn.text.isNotEmpty() && binding.passwordEtSignIn.text.isNotEmpty()) {
+//            if (encryptedSharedPrefs.contains(EMAIL) && encryptedSharedPrefs.contains(PASSWORD)) {
+//                startHomeActivity()
+//            } else {
+//                showSnackbar("Account not found. Please create an account")
+//            }
+//        } else {
+//            showSnackbar("Please ensure both fields aren't empty")
+//        }
+//    }
 
     companion object {
         const val FILENAME = "login-details"
