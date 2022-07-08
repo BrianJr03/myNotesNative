@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import jr.brian.mynotesnative.R
 import jr.brian.mynotesnative.constant.Constant
+import jr.brian.mynotesnative.data.User
 import jr.brian.mynotesnative.db.DatabaseHelper
 import jr.brian.mynotesnative.notes.NotesGridActivity
 import org.json.JSONObject
@@ -53,13 +54,12 @@ class SignInFragment : Fragment() {
 
     private fun initView(view: View) {
         view.findViewById<Button>(R.id.signInBTN).setOnClickListener {
-
             verifySignIn(view)
         }
     }
 
-    private fun startHomeActivity(context: Context) {
-        startActivity(Intent(context, NotesGridActivity::class.java))
+    private fun startNotesGridActivity(intent: Intent) {
+        startActivity(intent)
     }
 
     private fun showSnackbar(str: String, view: View) {
@@ -79,8 +79,18 @@ class SignInFragment : Fragment() {
         val request = JsonObjectRequest(Request.Method.POST, url, data, { response: JSONObject ->
             val msg = response.getString("message")
             Log.i("msg", msg)
+            val userJsonObj = response.getJSONObject("user")
+            val user = User("", "", "", "")
+            userJsonObj.apply {
+                user.full_name = getString("full_name")
+                user.email_id = getString("email_id")
+                user.mobile_no = getString("mobile_no")
+                user.user_id = getString("user_id")
+            }
+            val intent = Intent(context, NotesGridActivity::class.java)
+            intent.putExtra("user", user)
             cpb.visibility = View.GONE
-            startHomeActivity(view.context)
+            startNotesGridActivity(intent)
         }, { error: VolleyError ->
             error.printStackTrace()
             showSnackbar("Sign in failed. Try again.", view)
@@ -93,15 +103,16 @@ class SignInFragment : Fragment() {
         val passwordEtSignIn = view.findViewById<EditText>(R.id.password_et_signIn)
         if (emailEtSignIn.text.isNotEmpty() && passwordEtSignIn.text.isNotEmpty()) {
             val data = JSONObject().apply {
+                put("full_name", "Brian Jr")
+                put("mobile_no", "21212121")
                 put("email_id", emailEtSignIn.text.toString())
                 put("password", passwordEtSignIn.text.toString())
             }
-            makeSignInApiRequest(view, data)
-//            if (encryptedSharedPrefs.contains(EMAIL) && encryptedSharedPrefs.contains(PASSWORD)) {
-
-//            } else {
-//                showSnackbar("Account not found. Please create an account", view)
-//            }
+            if (encryptedSharedPrefs.contains(EMAIL) && encryptedSharedPrefs.contains(PASSWORD)) {
+                makeSignInApiRequest(view, data)
+            } else {
+                showSnackbar("Account not found. Please create an account", view)
+            }
         } else {
             showSnackbar("Please ensure both fields aren't empty", view)
         }
@@ -109,8 +120,8 @@ class SignInFragment : Fragment() {
 
     companion object {
         const val FILENAME = "login-details"
-//        const val EMAIL = "email"
-//        const val PASSWORD = "password"
+        const val EMAIL = "email"
+        const val PASSWORD = "password"
     }
 
     override fun onCreateView(

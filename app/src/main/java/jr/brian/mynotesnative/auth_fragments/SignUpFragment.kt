@@ -78,8 +78,8 @@ class SignUpFragment : Fragment() {
                         put("email_id", emailEt.text.toString())
                         put("password", passwordEt.text.toString())
                     }
-//                    signUp(emailEt.text.toString(), passwordEt.text.toString(), view.context)
                     makeSignUpApiRequest(view, data)
+                    signUp(emailEt.text.toString(), passwordEt.text.toString(), view.context)
                 } else showSnackbar("Passwords do not match", view)
             } else showSnackbar("Please ensure all fields aren't empty", view)
         }
@@ -108,15 +108,15 @@ class SignUpFragment : Fragment() {
         ).show()
     }
 
-//    private fun signUp(email: String, password: String, context: Context) {
-//        editor.apply {
-//            putString(EMAIL, email)
-//            putString(PASSWORD, password)
-//            if (commit()) {
-//                startHomeActivity(context)
-//            }
-//        }
-//    }
+    private fun signUp(email: String, password: String, context: Context) {
+        editor.apply {
+            putString(EMAIL, email)
+            putString(PASSWORD, password)
+            if (commit()) {
+                startHomeActivity(context)
+            }
+        }
+    }
 
     private fun startHomeActivity(context: Context) {
         startActivity(Intent(context, NotesGridActivity::class.java))
@@ -124,7 +124,7 @@ class SignUpFragment : Fragment() {
 
     companion object {
         const val FILENAME = "login-details"
-//        const val EMAIL = "email"
-//        const val PASSWORD = "password"
+        const val EMAIL = "email"
+        const val PASSWORD = "password"
     }
 }

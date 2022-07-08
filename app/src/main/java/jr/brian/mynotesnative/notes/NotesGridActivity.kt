@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -21,17 +22,20 @@ import jr.brian.mynotesnative.data.Note
 import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
 import jr.brian.mynotesnative.databinding.NavHeaderBinding
 import jr.brian.mynotesnative.db.DatabaseHelper
+import jr.brian.mynotesnative.db.PantryHelper
 
 class NotesGridActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesGridBinding
     private lateinit var navHeaderBinding: NavHeaderBinding
     private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var pantryHelper: PantryHelper
     private lateinit var noteAdapter: NoteAdapter
     private lateinit var noteList: ArrayList<Note>
     private lateinit var favList: ArrayList<Note>
     private lateinit var sp: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var fullName: String
 
     private var areAllNotesDisplayed = true
 
@@ -40,22 +44,25 @@ class NotesGridActivity : AppCompatActivity() {
         binding = ActivityNotesGridBinding.inflate(layoutInflater)
         navHeaderBinding = NavHeaderBinding.inflate(layoutInflater)
         navHeaderBinding.animationView.setMinAndMaxFrame(67, 120)
+        pantryHelper = PantryHelper()
         setContentView(binding.root)
         init()
         supportActionBar?.hide()
     }
 
     private fun init() {
-        initLists()
+        noteList = ArrayList()
+        favList = ArrayList()
         setAdapter(noteList)
-        initData()
+        fetchSqlData()
+        initFullName()
         initDrawer()
         initListeners()
         initNoteOnSwipe()
         initSharedPref()
     }
 
-    private fun initData() {
+    private fun fetchSqlData() {
         var note: Note
         databaseHelper = DatabaseHelper(this)
         val cursor = databaseHelper.getNotes()
@@ -118,9 +125,10 @@ class NotesGridActivity : AppCompatActivity() {
         }
     }
 
-    private fun initLists() {
-        noteList = ArrayList()
-        favList = ArrayList()
+    private fun initFullName() {
+        fullName =
+            intent.extras?.getString("user") ?: "Full Name"
+        navHeaderBinding.fullNameTv.text = fullName
     }
 
     private fun initListeners() {
@@ -184,6 +192,8 @@ class NotesGridActivity : AppCompatActivity() {
     private fun deleteNote(viewHolder: RecyclerView.ViewHolder) {
         val pos = viewHolder.adapterPosition
         databaseHelper.deleteNote(noteList[pos])
+        pantryHelper.deleteNote(noteList[pos], binding.root)
+        Log.i("RESPONSE_DELETED", noteList[pos].title)
         noteList.removeAt(pos)
 //        favList.apply {
 //            if (isNotEmpty()) {
@@ -201,17 +211,19 @@ class NotesGridActivity : AppCompatActivity() {
     }
 
     @SuppressLint("Range")
-    private fun getCurrentNote(cursor: Cursor) = Note(
-        title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.TITLE)),
-        body = cursor.getString(cursor.getColumnIndex(DatabaseHelper.BODY)),
-        date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DATE)),
-        passcode = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PASSCODE)),
-        bodyFontSize = cursor.getString(cursor.getColumnIndex(DatabaseHelper.BODY_FONT_SIZE)),
-        textColor = cursor.getString(cursor.getColumnIndex(DatabaseHelper.TEXT_COLOR)),
-        isStarred = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_STARRED)),
-        isLocked = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_LOCKED)),
-        index = noteList.size
-    )
+    private fun getCurrentNote(cursor: Cursor): Note {
+        return Note(
+            title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.TITLE)),
+            body = cursor.getString(cursor.getColumnIndex(DatabaseHelper.BODY)),
+            date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DATE)),
+            passcode = cursor.getString(cursor.getColumnIndex(DatabaseHelper.PASSCODE)),
+            bodyFontSize = cursor.getString(cursor.getColumnIndex(DatabaseHelper.BODY_FONT_SIZE)),
+            textColor = cursor.getString(cursor.getColumnIndex(DatabaseHelper.TEXT_COLOR)),
+            isStarred = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_STARRED)),
+            isLocked = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IS_LOCKED)),
+            index = noteList.size
+        )
+    }
 
     private fun toggleFavorites() {
         areAllNotesDisplayed = !areAllNotesDisplayed

@@ -2,6 +2,7 @@ package jr.brian.mynotesnative.notes
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import jr.brian.mynotesnative.databinding.ActivityNoteEditorBinding
 import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
 import jr.brian.mynotesnative.databinding.PasscodeDialogBinding
 import jr.brian.mynotesnative.db.DatabaseHelper
+import jr.brian.mynotesnative.db.PantryHelper
 import jr.brian.mynotesnative.notes.NoteAdapter.Companion.INDEX
 import jr.brian.mynotesnative.notes.NoteAdapter.Companion.NOTE_DATA
 import java.time.LocalDateTime
@@ -23,6 +25,7 @@ class NoteEditorActivity : AppCompatActivity() {
     private lateinit var gridBinding: ActivityNotesGridBinding
     private lateinit var passcodeDialogBinding: PasscodeDialogBinding
     private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var pantryHelper: PantryHelper
 
     private val current = LocalDateTime.now()
     private val formatter = DateTimeFormatter.ofPattern("M/d/yyyy")
@@ -42,6 +45,7 @@ class NoteEditorActivity : AppCompatActivity() {
         gridBinding = ActivityNotesGridBinding.inflate(layoutInflater)
         passcodeDialogBinding = PasscodeDialogBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(this)
+        pantryHelper = PantryHelper()
         setContentView(binding.root)
         supportActionBar?.hide()
         initView()
@@ -193,10 +197,16 @@ class NoteEditorActivity : AppCompatActivity() {
             if (title.isNotEmpty() && body.isNotEmpty()) {
                 if (passcode.isEmpty()) isLocked = false
                 when (mode) {
-                    "update" ->
+                    "update" -> {
                         databaseHelper.updateNote(note)
-                    "save" ->
+                        pantryHelper.updateNote(note, binding.root)
+                        Log.i("RESPONSE_UPDATED", note.title)
+                    }
+                    "save" -> {
                         databaseHelper.addNote(note)
+                        pantryHelper.saveNote(note, binding.root)
+                        Log.i("RESPONSE_SAVED", note.title)
+                    }
                 }
                 startNoteGridActivity()
             } else showSnackbar("Please ensure both fields aren't empty")

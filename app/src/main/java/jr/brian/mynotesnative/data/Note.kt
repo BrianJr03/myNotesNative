@@ -2,6 +2,7 @@ package jr.brian.mynotesnative.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.LocalDateTime
 
 @Parcelize
 data class Note(
@@ -13,5 +14,5 @@ data class Note(
     val textColor: String,
     val isStarred: String,
     val isLocked: String,
-    val index: Int = 0
+    var index: Int = 0,
 ) : Parcelable

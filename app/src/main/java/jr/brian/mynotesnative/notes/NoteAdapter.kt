@@ -12,11 +12,13 @@ import jr.brian.mynotesnative.R
 import jr.brian.mynotesnative.data.Note
 import jr.brian.mynotesnative.databinding.NoteBinding
 import jr.brian.mynotesnative.databinding.PasscodeDialogBinding
+import jr.brian.mynotesnative.db.PantryHelper
 
 class NoteAdapter(private val context: Context, private val notes: List<Note>) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private lateinit var binding: NoteBinding
+    private lateinit var pantryHelper: PantryHelper
     private lateinit var passcodeDialogBinding: PasscodeDialogBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -24,6 +26,7 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
         binding = NoteBinding.inflate(layoutInflater, parent, false)
         passcodeDialogBinding =
             PasscodeDialogBinding.inflate(layoutInflater, parent, false)
+        pantryHelper = PantryHelper()
         return NoteViewHolder(binding.root)
     }
 

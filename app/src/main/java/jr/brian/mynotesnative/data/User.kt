@@ -1,8 +1,12 @@
 package jr.brian.mynotesnative.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class User(
-    val email_id: String,
-    val full_name: String,
-    val mobile_no: String,
-    val user_id: String
-)
+    var email_id: String,
+    var full_name: String,
+    var mobile_no: String,
+    var user_id: String
+) : Parcelable
