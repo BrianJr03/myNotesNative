@@ -23,6 +23,8 @@ import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
 import jr.brian.mynotesnative.databinding.NavHeaderBinding
 import jr.brian.mynotesnative.db.DatabaseHelper
 import jr.brian.mynotesnative.db.PantryHelper
+import jr.brian.mynotesnative.roomdb.AppDatabase
+import jr.brian.mynotesnative.roomdb.NoteDao
 
 class NotesGridActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesGridBinding
@@ -30,12 +32,13 @@ class NotesGridActivity : AppCompatActivity() {
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var pantryHelper: PantryHelper
     private lateinit var noteAdapter: NoteAdapter
-    private lateinit var noteList: ArrayList<Note>
-    private lateinit var favList: ArrayList<Note>
+    private lateinit var noteList: MutableList<Note>
+    private lateinit var favList: List<Note>
     private lateinit var sp: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var fullName: String
+    private var noteDao: NoteDao? = null
 
     private var areAllNotesDisplayed = true
 
@@ -46,6 +49,10 @@ class NotesGridActivity : AppCompatActivity() {
         navHeaderBinding.animationView.setMinAndMaxFrame(67, 120)
         pantryHelper = PantryHelper()
         setContentView(binding.root)
+        val appDB: AppDatabase? = application.let {
+            AppDatabase.getInstance(applicationContext)
+        }
+        noteDao = appDB?.getBlogDao()
         init()
         supportActionBar?.hide()
     }
@@ -54,7 +61,7 @@ class NotesGridActivity : AppCompatActivity() {
         noteList = ArrayList()
         favList = ArrayList()
         setAdapter(noteList)
-        fetchSqlData()
+        getNotesFromRoomDB()
         initFullName()
         initDrawer()
         initListeners()
@@ -62,31 +69,10 @@ class NotesGridActivity : AppCompatActivity() {
         initSharedPref()
     }
 
-    private fun fetchSqlData() {
-        var note: Note
-        databaseHelper = DatabaseHelper(this)
-        val cursor = databaseHelper.getNotes()
-        if (cursor != null) {
-            if (cursor.count != 0) {
-                cursor.moveToFirst()
-                note = getCurrentNote(cursor)
-                if (note.isStarred == "true") {
-                    favList.add(note)
-                }
-                noteList.add(note)
-                while (cursor.moveToNext()) {
-                    note = getCurrentNote(cursor)
-                    if (note.isStarred == "true") {
-                        favList.add(note)
-                    }
-                    noteList.add(note)
-                }
-                noteAdapter.notifyItemInserted(noteList.size)
-            }
-        }
-        if (noteList.size < 1) {
-            binding.noNotesIv.visibility = View.VISIBLE
-        }
+    private fun getNotesFromRoomDB() {
+        noteList = noteDao?.getAllNotes()!!
+//        Log.i("NOTE_DATA_FIRST", noteList[0].toString())
+        setAdapter(noteList)
     }
 
     private fun initDrawer() {
@@ -191,10 +177,11 @@ class NotesGridActivity : AppCompatActivity() {
 
     private fun deleteNote(viewHolder: RecyclerView.ViewHolder) {
         val pos = viewHolder.adapterPosition
-        databaseHelper.deleteNote(noteList[pos])
-        pantryHelper.deleteNote(noteList[pos], binding.root)
-        Log.i("RESPONSE_DELETED", noteList[pos].title)
-        noteList.removeAt(pos)
+        noteDao?.delete(noteList[pos])
+//        databaseHelper.deleteNote(noteList[pos])
+//        pantryHelper.deleteNote(noteList[pos], binding.root)
+        noteList.remove(noteList[pos])
+//        noteList.re
 //        favList.apply {
 //            if (isNotEmpty()) {
 //                if (favList.contains(noteList[pos])) {

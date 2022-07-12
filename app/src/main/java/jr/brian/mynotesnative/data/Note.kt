@@ -1,18 +1,21 @@
 package jr.brian.mynotesnative.data
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
-import java.time.LocalDateTime
 
 @Parcelize
+@Entity(tableName = "Note")
 data class Note(
-    val title: String,
-    val body: String,
-    val date: String,
-    val passcode: String,
-    val bodyFontSize: String = "14",
-    val textColor: String,
-    val isStarred: String,
-    val isLocked: String,
-    var index: Int = 0,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "body") val body: String,
+    @ColumnInfo(name = "date") val date: String,
+    @ColumnInfo(name = "passcode") val passcode: String,
+    @ColumnInfo(name = "bodyFontSize") val bodyFontSize: String = "14",
+    @ColumnInfo(name = "textColor") val textColor: String,
+    @ColumnInfo(name = "isStarred") val isStarred: String,
+    @ColumnInfo(name = "isLocked") val isLocked: String,
+    @PrimaryKey(autoGenerate = true) var index: Int = 0,
 ) : Parcelable

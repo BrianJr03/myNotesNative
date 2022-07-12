@@ -104,6 +104,5 @@ class NoteAdapter(private val context: Context, private val notes: List<Note>) :
 
     companion object {
         const val NOTE_DATA = "note"
-        const val INDEX = "index"
     }
 }

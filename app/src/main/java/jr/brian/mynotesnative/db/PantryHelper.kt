@@ -1,5 +1,6 @@
 package jr.brian.mynotesnative.db
 
+import android.util.Log
 import android.view.View
 import com.android.volley.Request
 import com.android.volley.VolleyError
@@ -33,6 +34,7 @@ class PantryHelper {
     }
 
     fun saveNote(note: Note, view: View): JSONObject {
+        Log.i("RESPONSE_SAVED", note.title)
         return crudNote(
             note,
             view,
@@ -41,6 +43,7 @@ class PantryHelper {
     }
 
     fun updateNote(note: Note, view: View): JSONObject {
+        Log.i("RESPONSE_UPDATED", note.title)
         return crudNote(
             note,
             view,
@@ -57,6 +60,7 @@ class PantryHelper {
     }
 
     fun deleteNote(note: Note, view: View): JSONObject {
+        Log.i("RESPONSE_DELETED", note.title)
         return crudNote(
             note,
             view,

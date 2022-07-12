@@ -2,7 +2,6 @@ package jr.brian.mynotesnative.notes
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,8 +13,9 @@ import jr.brian.mynotesnative.databinding.ActivityNotesGridBinding
 import jr.brian.mynotesnative.databinding.PasscodeDialogBinding
 import jr.brian.mynotesnative.db.DatabaseHelper
 import jr.brian.mynotesnative.db.PantryHelper
-import jr.brian.mynotesnative.notes.NoteAdapter.Companion.INDEX
 import jr.brian.mynotesnative.notes.NoteAdapter.Companion.NOTE_DATA
+import jr.brian.mynotesnative.roomdb.AppDatabase
+import jr.brian.mynotesnative.roomdb.NoteDao
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -26,6 +26,7 @@ class NoteEditorActivity : AppCompatActivity() {
     private lateinit var passcodeDialogBinding: PasscodeDialogBinding
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var pantryHelper: PantryHelper
+    private var noteDao: NoteDao? = null
 
     private val current = LocalDateTime.now()
     private val formatter = DateTimeFormatter.ofPattern("M/d/yyyy")
@@ -48,6 +49,10 @@ class NoteEditorActivity : AppCompatActivity() {
         pantryHelper = PantryHelper()
         setContentView(binding.root)
         supportActionBar?.hide()
+        val appDB: AppDatabase? = application.let {
+            AppDatabase.getInstance(applicationContext)
+        }
+        noteDao = appDB?.getBlogDao()
         initView()
         initListeners()
     }
@@ -59,7 +64,7 @@ class NoteEditorActivity : AppCompatActivity() {
                 textColor = note.textColor
                 passcode = note.passcode
                 bodyTextSize = note.bodyFontSize
-                index = intent.extras?.get(INDEX) as Int
+                index = note.index
                 mode = intent.extras?.getString("mode") ?: mode
                 binding.apply {
                     titleEt.setText(note.title)
@@ -198,14 +203,14 @@ class NoteEditorActivity : AppCompatActivity() {
                 if (passcode.isEmpty()) isLocked = false
                 when (mode) {
                     "update" -> {
-                        databaseHelper.updateNote(note)
-                        pantryHelper.updateNote(note, binding.root)
-                        Log.i("RESPONSE_UPDATED", note.title)
+                        noteDao?.update(note)
+//                        databaseHelper.updateNote(note)
+//                        pantryHelper.updateNote(note, binding.root)
                     }
                     "save" -> {
-                        databaseHelper.addNote(note)
-                        pantryHelper.saveNote(note, binding.root)
-                        Log.i("RESPONSE_SAVED", note.title)
+                        noteDao?.insert(note)
+////                        databaseHelper.addNote(note)
+//                        pantryHelper.saveNote(note, binding.root)
                     }
                 }
                 startNoteGridActivity()
